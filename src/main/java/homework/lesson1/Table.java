@@ -9,8 +9,16 @@ public class Table {
         this.number = number;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     public boolean isBooked() {
         return isBooked;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public void setBooked(boolean booked) {

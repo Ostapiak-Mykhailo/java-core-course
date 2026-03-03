@@ -3,6 +3,7 @@ package homework.lesson1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
@@ -10,16 +11,17 @@ public class Restaurant {
     private final List<Table> tables;
     static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
-    public Restaurant(List<Table> tables) {
-        this.tables = tables;
-        tables.add(new Table(1));
-        tables.add(new Table(2));
-        tables.add(new Table(3));
+    public Restaurant(int numberOfTables) {
+        this.tables = new ArrayList<>();
+        for (int i = 1; i <= numberOfTables; i++) {
+            Table table = new Table(i);
+            tables.add(table);
+        }
     }
 
-    public void doOption() throws IOException {
+    public void runMenu() throws IOException {
         while (true) {
-            OptionChoice optionChoice = suggestOption();
+            OptionChoice optionChoice = getInputFromUser();
             switch (optionChoice) {
                 case BOOK -> bookTable();
                 case LEAVE -> leaveTable();
@@ -28,7 +30,7 @@ public class Restaurant {
         }
     }
 
-    public OptionChoice suggestOption() throws IOException {
+    public OptionChoice getInputFromUser() throws IOException {
         System.out.println("Please choose what do you want to do: to BOOK table or to LEAVE it");
         while (true) {
             String input = READER.readLine();
@@ -42,69 +44,60 @@ public class Restaurant {
     }
 
     public void bookTable() throws IOException {
-        TableChoice tableChoice = suggestToBookTable();
-        switch (tableChoice) {
-            case TABLE1 -> {
-                tables.getFirst().setBooked(true);
-                System.out.println("You have booked table 1 successfully");
+        System.out.println("Now you can see the numbers of unbooked tables. " +
+                "Please enter the number of table you want to book");
+        for (Table table : tables) {
+            if (!table.isBooked()) {
+                System.out.println(table.getNumber());
             }
-            case TABLE2 -> {
-                tables.get(1).setBooked(true);
-                System.out.println("You have booked table 2 successfully");
+        }
+        while (true) {
+            String input = READER.readLine();
+            int number;
+            try {
+                number = Integer.parseInt(input);
+            } catch (NumberFormatException e){
+                System.out.println("Please enter the number only");
+                continue;
             }
-            case TABLE3 -> {
-                tables.get(2).setBooked(true);
-                System.out.println("You have booked table 3 successfully");
+            if (number < 1 || number > tables.size()) {
+                System.out.println("There is no table with this number.");
+            } else if (tables.get(number - 1).isBooked()) {
+                System.out.println("Sorry, this table has already been booked. Please choose another one");
+            } else {
+                tables.get(number - 1).setBooked(true);
+                System.out.println("You have booked table " + number + " successfully");
+                break;
             }
         }
     }
 
     public void leaveTable() throws IOException {
-        TableChoice tableChoice = suggestToLeaveTable();
-        switch (tableChoice) {
-            case TABLE1 -> {
-                tables.getFirst().setBooked(false);
-                System.out.println("You have left table 1");
-            }
-            case TABLE2 -> {
-                tables.get(1).setBooked(false);
-                System.out.println("You have left table 2");
-            }
-            case TABLE3 -> {
-                tables.get(2).setBooked(false);
-                System.out.println("You have left table 3");
-            }
-        }
-    }
-
-    public TableChoice suggestToBookTable() throws IOException {
-        System.out.println("Please choose table you want to book");
-        System.out.println("You can book following tables:");
+        System.out.println("Now you can see the numbers of tables which are booked. " +
+                "Please enter the number of table you want to leave");
         for (Table table : tables) {
-            if (!table.isBooked())
-                try {
-                    System.out.println(table);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("invalid choice");
-                }
+            if (table.isBooked()) {
+                System.out.println(table.getNumber());
+            }
         }
-        String input = READER.readLine();
-        input = input.toUpperCase();
-        return TableChoice.valueOf(input);
-    }
-
-    public TableChoice suggestToLeaveTable() throws IOException {
-        System.out.println("Please choose table you want to leave");
-        for (Table table : tables) {
-            if (table.isBooked())
-                try {
-                    System.out.println(table);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("invalid choice");
-                }
+        while (true){
+            String input = READER.readLine();
+            int number;
+            try {
+                number = Integer.parseInt(input);
+            } catch (NumberFormatException e){
+                System.out.println("Just enter a number");
+                continue;
+            }
+            if (number < 1 || number > tables.size()){
+                System.out.println("There is no table with this number.");
+            } else if (!tables.get(number - 1).isBooked()){
+                System.out.println("You cannot leave table if you haven`t booked it:)");
+            } else {
+                tables.get(number - 1).setBooked(false);
+                System.out.println("You have left table " + number + " successfully");
+                break;
+            }
         }
-        String input = READER.readLine();
-        input = input.toUpperCase();
-        return TableChoice.valueOf(input);
     }
 }
