@@ -12,13 +12,13 @@ public class CheckUpVisit extends Visit {
     }
 
     @Override
-    protected void toDiagnose() {
-        System.out.println("The doc has not diagnosed any illness. " + getAnimal().getName() + " " +
+    protected void toDiagnose(Client client) {
+        System.out.println("The doc has not diagnosed any illness. " + client.getAnimal().getName() + " " +
                 "is in very good condition");
     }
 
     @Override
-    protected void toTreat() {
-        System.out.println(getAnimal().getName() + " does not need any treatment");
+    protected void toTreat(Client client) {
+        System.out.println(client.getAnimal().getName() + " does not need any treatment");
     }
 }

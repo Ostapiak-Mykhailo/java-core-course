@@ -17,12 +17,12 @@ public class SickVisit extends Visit {
     }
 
     @Override
-    protected void toDiagnose() {
+    protected void toDiagnose(Client client) {
         System.out.println("The doc has diagnosed a broken paw");
     }
 
     @Override
-    protected void toTreat() {
+    protected void toTreat(Client client) {
         System.out.println("The doctor applied a cast");
     }
 

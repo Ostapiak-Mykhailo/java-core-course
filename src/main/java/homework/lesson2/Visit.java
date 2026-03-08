@@ -12,19 +12,19 @@ public abstract class Visit {
 
     protected void executeVisit() {
         takeHistory();
-        toDiagnose();
-        toTreat();
+        toDiagnose(client);
+        toTreat(client);
         toRecommend();
     }
 
     protected void takeHistory() {
     }
 
-    protected void toDiagnose() {
+    protected void toDiagnose(Client client) {
 
     }
 
-    protected void toTreat() {
+    protected void toTreat(Client client) {
 
     }
 

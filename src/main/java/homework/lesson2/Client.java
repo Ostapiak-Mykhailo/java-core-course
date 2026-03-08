@@ -13,4 +13,8 @@ public class Client {
     public Visit goToClinic(Visit visit) {
         return visit;
     }
+
+    public Animal getAnimal() {
+        return animal;
+    }
 }
