@@ -12,13 +12,21 @@ public class CheckUpVisit extends Visit {
     }
 
     @Override
-    protected void toDiagnose(Client client) {
-        System.out.println("The doc has not diagnosed any illness. " + client.getAnimal().getName() + " " +
+    public void toDiagnose(Client client) {
+        super.toDiagnose(client);
+        System.out.println("The doc has not diagnosed any illness. " + animal.getName() + " " +
                 "is in very good condition");
     }
 
     @Override
     protected void toTreat(Client client) {
-        System.out.println(client.getAnimal().getName() + " does not need any treatment");
+        System.out.println(animal.getName() + " does not need any treatment");
+    }
+
+    @Override
+    protected void fillHistory(Animal animal) {
+        String record = "The patient was examined. Condition is satisfactory.";
+        History history = new History(record);
+        animal.getRecords().add(history);
     }
 }

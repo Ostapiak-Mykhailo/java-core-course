@@ -1,9 +1,11 @@
 package homework.lesson2;
 
-public abstract class Visit {
+import java.util.List;
 
-    private Client client;
-    private Animal animal;
+public abstract class Visit implements Diagnosable{
+
+    protected Client client;
+    protected Animal animal;
 
     public Visit(Client client, Animal animal) {
         this.client = client;
@@ -11,16 +13,32 @@ public abstract class Visit {
     }
 
     protected void executeVisit() {
-        takeHistory();
+        takeHistory(animal);
         toDiagnose(client);
+        toVaccinate();
         toTreat(client);
         toRecommend();
+        fillHistory(animal);
     }
 
-    protected void takeHistory() {
+    protected void takeHistory(Animal animal) {
+        List<History> history = animal.getRecords();
+        if (history.isEmpty()) {
+            System.out.println("No records found");
+            return;
+        }
+        for (History h : history) {
+            System.out.println(h.getDescription());
+        }
     }
 
-    protected void toDiagnose(Client client) {
+
+    @Override
+    public void toDiagnose(Client client) {
+        System.out.println("The doctor made a diagnosis");
+    }
+
+    protected void toVaccinate() {
 
     }
 
@@ -29,6 +47,10 @@ public abstract class Visit {
     }
 
     protected void toRecommend() {
+
+    }
+
+    protected void fillHistory(Animal animal) {
 
     }
 }
