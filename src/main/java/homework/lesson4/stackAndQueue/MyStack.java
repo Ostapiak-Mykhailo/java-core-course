@@ -4,14 +4,14 @@ public class MyStack {
 
     private Integer[] integers;
     private int size = 0;
-    private final int capacity = 10;
+    private static final int CAPACITY = 10;
 
     public MyStack() {
-        integers = new Integer[capacity];
+        integers = new Integer[CAPACITY];
     }
 
     public void push(int value) {
-        if (capacity <= size) {
+        if (CAPACITY <= size) {
             grow();
         }
         integers[size] = value;

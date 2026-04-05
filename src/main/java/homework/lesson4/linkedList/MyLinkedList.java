@@ -12,7 +12,7 @@ public class MyLinkedList implements MyLinkedListInterface {
 
     @Override
     public Integer get(int index) {
-        isIndex(index);
+        CheckElementIndex(index);
         Node current = first;
         for (int i = 0; i < index; i++) {
             current = current.next;
@@ -22,7 +22,7 @@ public class MyLinkedList implements MyLinkedListInterface {
 
     @Override
     public void set(int index, int value) {
-        isIndex(index);
+        CheckElementIndex(index);
         Node current = first;
         for (int i = 0; i < index; i++) {
             current = current.next;
@@ -92,7 +92,7 @@ public class MyLinkedList implements MyLinkedListInterface {
 
     @Override
     public void remove(int index) {
-        isIndex(index);
+        CheckElementIndex(index);
         Node current = first;
         for (int i = 0; i < index; i++) {
             current = current.next;
@@ -111,7 +111,7 @@ public class MyLinkedList implements MyLinkedListInterface {
         size--;
     }
 
-    private void isIndex(int index) {
+    private void CheckElementIndex(int index) {
         if (0 > index || size <= index) {
             throw new IndexOutOfBoundsException();
         }

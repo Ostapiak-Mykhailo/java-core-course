@@ -4,14 +4,14 @@ public class MyQueue {
 
     private String[] strings;
     private int size = 0;
-    private final int capacity = 10;
+    private static final int CAPACITY = 10;
 
     public MyQueue() {
-        strings = new String[capacity];
+        strings = new String[CAPACITY];
     }
 
     public void add(String string) {
-        if (capacity <= size) {
+        if (CAPACITY <= size) {
             grow();
         }
         strings[size] = string;
