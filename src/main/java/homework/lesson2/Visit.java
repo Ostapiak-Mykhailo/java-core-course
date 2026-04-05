@@ -4,6 +4,7 @@ import java.util.List;
 
 public abstract class Visit implements Diagnosable{
 
+    protected String description;
     protected Client client;
     protected Animal animal;
 
@@ -22,12 +23,12 @@ public abstract class Visit implements Diagnosable{
     }
 
     protected void takeHistory(Animal animal) {
-        List<History> history = animal.getRecords();
+        List<Visit> history = animal.getHistory();
         if (history.isEmpty()) {
             System.out.println("No records found");
             return;
         }
-        for (History h : history) {
+        for (Visit h : history) {
             System.out.println(h.getDescription());
         }
     }
@@ -52,5 +53,13 @@ public abstract class Visit implements Diagnosable{
 
     protected void fillHistory(Animal animal) {
 
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

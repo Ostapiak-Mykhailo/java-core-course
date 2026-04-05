@@ -35,7 +35,7 @@ public class SickVisit extends Visit {
     @Override
     protected void fillHistory(Animal animal) {
         String record = "Diagnosed with a broken paw. A cast was applied. Rest is required for one month.";
-        History history = new History(record);
-        animal.getRecords().add(history);
+        Visit history = new SickVisit(client, animal);
+        animal.getHistory().add(history);
     }
 }

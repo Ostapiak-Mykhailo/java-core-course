@@ -36,7 +36,7 @@ public class VaccinationVisit extends Visit {
     protected void fillHistory(Animal animal) {
         String record = animal.getName() + " was vaccinated. No complications observed. " +
                 "Next vaccination is recommended in 6 months.";
-        History history = new History(record);
-        animal.getRecords().add(history);
+        Visit history = new VaccinationVisit(client, animal);
+        animal.getHistory().add(history);
     }
 }

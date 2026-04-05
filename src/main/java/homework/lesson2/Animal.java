@@ -7,7 +7,7 @@ public abstract class Animal {
     private final String name;
     private int age;
     private int weight;
-    private List<History> records = new ArrayList<>();
+    private List<Visit> history = new ArrayList<>();
 
     public Animal(String name, int age, int weight) {
         this.name = name;
@@ -19,11 +19,11 @@ public abstract class Animal {
         return name;
     }
 
-    public List<History> getRecords() {
-        return records;
+    public List<Visit> getHistory() {
+        return history;
     }
 
-    public void setRecords(List<History> records) {
-        this.records = records;
+    public void setHistory(List<Visit> history) {
+        this.history = history;
     }
 }

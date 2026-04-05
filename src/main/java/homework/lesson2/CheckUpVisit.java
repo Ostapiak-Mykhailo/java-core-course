@@ -26,7 +26,7 @@ public class CheckUpVisit extends Visit {
     @Override
     protected void fillHistory(Animal animal) {
         String record = "The patient was examined. Condition is satisfactory.";
-        History history = new History(record);
-        animal.getRecords().add(history);
+        Visit history = new CheckUpVisit(client, animal);
+        animal.getHistory().add(history);
     }
 }
