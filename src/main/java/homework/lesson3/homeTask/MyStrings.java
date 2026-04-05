@@ -1,12 +1,11 @@
 package homework.lesson3.homeTask;
 
-import java.util.Arrays;
 
-public class MyStrings implements Implementable {
+public class MyStrings implements MyArrayListInterface {
 
     private String[] strings;
     private int size = 0;
-    private int capacity = 10;
+    private static final int capacity = 10;
 
     public MyStrings() {
         strings = new String[capacity];

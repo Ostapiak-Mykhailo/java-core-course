@@ -5,7 +5,7 @@ public abstract class Product {
     double price;
     String name;
 
-    public Product(double price, String name) {
+    protected Product(double price, String name) {
         this.price = price;
         this.name = name;
     }
