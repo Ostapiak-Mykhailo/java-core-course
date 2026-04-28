@@ -18,21 +18,21 @@ public class ShopView {
         System.out.println(greeting);
     }
 
-//    public DepartmentType selectDepartment() throws IOException {
-//        boolean isChosen = false;
-//        DepartmentType departmentType = null;
-//        while (!isChosen) {
-//            String input = getInput();
-//            input = input.toUpperCase();
-//            try {
-//                departmentType = DepartmentType.valueOf(input);
-//                isChosen = true;
-//            } catch (IllegalArgumentException e) {
-//                System.out.println("I haven`t opened such department... Yet");
-//            }
-//        }
-//        return departmentType;
-//    }
+    public DepartmentType selectDepartment() throws IOException {
+        boolean isChosen = false;
+        DepartmentType departmentType = null;
+        while (!isChosen) {
+            String input = getInput();
+            input = input.toUpperCase();
+            try {
+                departmentType = DepartmentType.valueOf(input);
+                isChosen = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("I haven`t opened such department... Yet");
+            }
+        }
+        return departmentType;
+    }
 
     public String getInput() throws IOException {
         return reader.readLine();
