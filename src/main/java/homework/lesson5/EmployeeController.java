@@ -31,7 +31,7 @@ public class EmployeeController {
     }
 
     private String fillEmployeesLastName() throws IOException {
-        System.out.println("Please enter Employee`s last name");
+        System.out.println("Please enter Employee`s last name or enter `stop` to see the employee`s list");
         return READER.readLine();
     }
 
