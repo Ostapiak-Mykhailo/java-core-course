@@ -1,8 +1,6 @@
 package homework.lesson6;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,19 +13,41 @@ public class Controller {
     public Controller() {
     }
 
+//    public void runApp() throws IOException {
+//        readOrdersFromFile();
+//        int orderNumber;
+//        do {
+//            orderNumber = getNumberFromUser();
+//            if (orderNumber != 0) {
+//                if (!isOrderExists(orderNumber)) {
+//                    createNewOrder(orderNumber);
+//                } else {
+//                    printStatus(orderNumber);
+//                }
+//            }
+//        } while (orderNumber != 0);
+//        writeOrdersToFile();
+//    }
+
     public void runApp() throws IOException {
-        while (true) {
-            int orderNumber = getNumberFromUser();
+        readOrdersFromFile();
+        int orderNumber = -1;
+        while (orderNumber != 0) {
+            orderNumber = getNumberFromUser();
+            if (orderNumber == 0) {
+                break;
+            }
             if (!isOrderExists(orderNumber)) {
                 createNewOrder(orderNumber);
             } else {
                 printStatus(orderNumber);
             }
         }
+        writeOrdersToFile();
     }
 
     private int getNumberFromUser() throws IOException {
-        System.out.println("Please enter the order number to get information");
+        System.out.println("Please enter the order number to get information or enter `0` to exit the program");
         try {
             String input = reader.readLine();
             return Integer.parseInt(input);
@@ -42,9 +62,9 @@ public class Controller {
     }
 
     private void createNewOrder(int orderNumber) throws IOException {
-        Order order1 = new Order(orderNumber, OrderStatus.NEW, LocalDateTime.now());
-        orders.put(order1.getOrderNumber(), order1);
-        System.out.println("Order with number " + orderNumber + " was created successfully with status " + order1.status);
+        Order order = new Order(orderNumber, OrderStatus.NEW, LocalDateTime.now());
+        orders.put(order.getOrderNumber(), order);
+        System.out.println("Order with number " + orderNumber + " was created successfully with status " + order.status);
     }
 
     private void printStatus(int orderNumber) throws IOException {
@@ -78,5 +98,52 @@ public class Controller {
             System.out.println("Invalid input.");
         }
         return getOrderStatus();
+    }
+
+    private void readOrdersFromFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/Orders.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(";");
+                int orderNumber = Integer.parseInt(parts[0]);
+                OrderStatus status = OrderStatus.valueOf(parts[1]);
+                LocalDateTime creationDate = LocalDateTime.parse(parts[2]);
+                Order order = new Order(orderNumber, status, creationDate);
+                orders.put(orderNumber, order);
+            }
+            if (orders.isEmpty()) {
+                System.out.println("The order list is empty yet");
+            } else {
+                printOrderList();
+            }
+        } catch (IOException e) {
+            System.out.println("Input error " + e.getMessage());
+        }
+    }
+
+    private void writeOrdersToFile() {
+        try (FileWriter writer = new FileWriter("src/Orders.txt")) {
+            String line;
+            for (Order order : orders.values()) {
+                line = "";
+                line += order.getOrderNumber();
+                line += ";";
+                line += order.getStatus();
+                line += ";";
+                line += order.getCreationDate();
+                line += ";";
+                line += order.getUpdateDate();
+                writer.write(line + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Output error " + e.getMessage());
+        }
+    }
+
+    private void printOrderList() {
+        System.out.println("Now you can see list of previous orders");
+        for (Order order : orders.values()) {
+            System.out.println(order.toString());
+        }
     }
 }
