@@ -1,8 +1,9 @@
 package homework.lesson6;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Order {
+public class Order implements Serializable {
 
     public OrderStatus status;
     public int orderNumber;

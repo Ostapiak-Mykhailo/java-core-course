@@ -13,24 +13,9 @@ public class Controller {
     public Controller() {
     }
 
-//    public void runApp() throws IOException {
-//        readOrdersFromFile();
-//        int orderNumber;
-//        do {
-//            orderNumber = getNumberFromUser();
-//            if (orderNumber != 0) {
-//                if (!isOrderExists(orderNumber)) {
-//                    createNewOrder(orderNumber);
-//                } else {
-//                    printStatus(orderNumber);
-//                }
-//            }
-//        } while (orderNumber != 0);
-//        writeOrdersToFile();
-//    }
-
     public void runApp() throws IOException {
-        readOrdersFromFile();
+//        readOrdersFromFile();
+        deSerializeOrders();
         int orderNumber = -1;
         while (orderNumber != 0) {
             orderNumber = getNumberFromUser();
@@ -43,7 +28,8 @@ public class Controller {
                 printStatus(orderNumber);
             }
         }
-        writeOrdersToFile();
+//        writeOrdersToFile();
+        serializeOrders();
     }
 
     private int getNumberFromUser() throws IOException {
@@ -83,7 +69,7 @@ public class Controller {
             }
             order.setStatus(newStatus);
             order.setUpdateDate(LocalDateTime.now());
-            System.out.println(order);
+            System.out.println("You`ve changed the status of this order " + "\n" + order);
         } catch (InvalidStatusException e) {
             System.out.println("ERROR: It is forbidden to transfer orders from later statuses to earlier ones");
         }
@@ -108,7 +94,14 @@ public class Controller {
                 int orderNumber = Integer.parseInt(parts[0]);
                 OrderStatus status = OrderStatus.valueOf(parts[1]);
                 LocalDateTime creationDate = LocalDateTime.parse(parts[2]);
+                LocalDateTime updatedDate;
+                if (parts.length > 3 && parts[3] != null && !parts[3].isEmpty() && !parts[3].equals("null")) {
+                    updatedDate = LocalDateTime.parse(parts[3]);
+                } else {
+                    updatedDate = null;
+                }
                 Order order = new Order(orderNumber, status, creationDate);
+                order.setUpdateDate(updatedDate);
                 orders.put(orderNumber, order);
             }
             if (orders.isEmpty()) {
@@ -137,6 +130,25 @@ public class Controller {
             }
         } catch (IOException e) {
             System.out.println("Output error " + e.getMessage());
+        }
+    }
+
+    private void serializeOrders() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Serialized orders.txt"))) {
+                oos.writeObject(orders);
+        } catch (IOException e) {
+            System.out.println("Error " + e.getMessage());
+        }
+    }
+
+    private void deSerializeOrders() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Serialized orders.txt"))) {
+            Map<Integer, Order> map = (Map<Integer, Order>) ois.readObject();
+            orders.clear();
+            orders.putAll(map);
+            printOrderList();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error " + e.getMessage());
         }
     }
 
