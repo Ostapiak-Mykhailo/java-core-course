@@ -5,15 +5,15 @@ import java.time.LocalDateTime;
 
 public class Order implements Serializable {
 
-    public OrderStatus status;
-    public int orderNumber;
-    public LocalDateTime creationDate;
-    public LocalDateTime updateDate;
+    private OrderStatus status;
+    private final int orderNumber;
+    private final LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public Order(int orderNumber, OrderStatus status, LocalDateTime creationDate) {
+    public Order(int orderNumber) {
         this.orderNumber = orderNumber;
-        this.status = status;
-        this.creationDate = creationDate;
+        this.status = OrderStatus.NEW;
+        this.createdAt = LocalDateTime.now();
     }
 
     public OrderStatus getStatus() {
@@ -22,30 +22,11 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public int getOrderNumber() {
         return orderNumber;
-    }
-
-    public void setOrderNumber(int orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public LocalDateTime getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
     }
 
     @Override
@@ -53,8 +34,8 @@ public class Order implements Serializable {
         return "Order{" +
                 "status = " + status +
                 ", orderNumber = " + orderNumber +
-                ", creationDate = " + creationDate +
-                ", updateDate = " + updateDate +
+                ", creationDate = " + createdAt +
+                ", updateDate = " + updatedAt +
                 '}';
     }
 }
