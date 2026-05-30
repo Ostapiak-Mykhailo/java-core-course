@@ -1,6 +1,7 @@
 package homework.lesson6;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ public class Controller {
     private final Map<Integer, Order> orders = new HashMap<>();
 
     public void runApp() throws IOException {
+        readOrdersFromFile();
         int orderNumber;
         while ((orderNumber = getNumberFromUser()) != 0) {
             if (!isOrderExists(orderNumber)) {
@@ -19,6 +21,7 @@ public class Controller {
                 changeOrderStatus(orderNumber);
             }
         }
+        writeOrdersToFile();
     }
 
     private int getNumberFromUser() throws IOException {
@@ -71,5 +74,56 @@ public class Controller {
             System.out.println("Invalid input.");
         }
         return getOrderStatus();
+    }
+
+    private void readOrdersFromFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/Orders.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(";");
+                int orderNumber = Integer.parseInt(parts[0]);
+                OrderStatus status = OrderStatus.valueOf(parts[1]);
+                LocalDateTime creationDate = LocalDateTime.parse(parts[2]);
+                LocalDateTime updatedDate;
+                if (parts.length > 3 & parts[3] != null & !parts[3].isEmpty() & !parts[3].equals("null")) {
+                    updatedDate = LocalDateTime.parse(parts[3]);
+                } else {
+                    updatedDate = null;
+                }
+                Order order = new Order(orderNumber, status, creationDate, updatedDate);
+                orders.put(orderNumber, order);
+            }
+            if (orders.isEmpty()) {
+                System.out.println("The order list is empty yet");
+            } else {
+                printOrderList();
+            }
+        } catch (IOException e) {
+            System.out.println("Input error " + e.getMessage());
+        }
+    }
+
+    private void writeOrdersToFile() {
+        try (FileWriter writer = new FileWriter("src/Orders.txt")) {
+            String line;
+            for (Order order : orders.values()) {
+                line = "";
+                line += order.getOrderNumber();
+                line += ";";
+                line += order.getStatus();
+                line += ";";
+                line += order.getCreatedAt();
+                line += ";";
+                line += order.getUpdatedAt();
+                writer.write(line + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Output error " + e.getMessage());
+        }
+    }
+
+    private void printOrderList() {
+        System.out.println("Now you can see list of previous orders");
+        orders.values().forEach(System.out::println);
     }
 }
