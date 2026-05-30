@@ -1,4 +1,4 @@
-package homework.lesson6;
+package homework.lesson8;
 
 public class InvalidStatusException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package homework.lesson6;
+package homework.lesson8;
 
 import java.io.*;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ public class Controller {
     private final Map<Integer, Order> orders = new HashMap<>();
 
     public void runApp() throws IOException {
+        deserialiseOrders();
         int orderNumber;
         while ((orderNumber = getNumberFromUser()) != 0) {
             if (!isOrderExists(orderNumber)) {
@@ -19,6 +20,7 @@ public class Controller {
                 changeOrderStatus(orderNumber);
             }
         }
+        serializeOrders();
     }
 
     private int getNumberFromUser() throws IOException {
@@ -71,5 +73,29 @@ public class Controller {
             System.out.println("Invalid input.");
         }
         return getOrderStatus();
+    }
+
+    private void serializeOrders() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Serialized_Orders.txt"))) {
+            oos.writeObject(orders);
+        } catch (IOException e) {
+            System.out.println("Error " + e.getMessage());
+        }
+    }
+
+    private void deserialiseOrders() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Serialized_Orders.txt"))) {
+            Map<Integer, Order> map = (Map<Integer, Order>) ois.readObject();
+            orders.clear();
+            orders.putAll(map);
+            printOrderList();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error " + e.getMessage());
+        }
+    }
+
+    private void printOrderList() {
+        System.out.println("Now you can see list of previous orders");
+        orders.values().forEach(System.out::println);
     }
 }
