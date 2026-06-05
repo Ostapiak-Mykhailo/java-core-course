@@ -12,11 +12,12 @@ public class Controller {
     public void runApp() throws IOException {
         int orderNumber;
         while ((orderNumber = getNumberFromUser()) != 0) {
-            if (!isOrderExists(orderNumber)) {
-                createNewOrder(orderNumber);
+            if (!isOrderExist(orderNumber)) {
+                createOrder(orderNumber);
             } else {
                 printStatus(orderNumber);
-                changeOrderStatus(orderNumber);
+                OrderStatus status = getOrderStatus();
+                changeOrderStatus(orderNumber, status);
             }
         }
     }
@@ -32,11 +33,11 @@ public class Controller {
         }
     }
 
-    private boolean isOrderExists(int orderNumber) {
+    private boolean isOrderExist(int orderNumber) {
         return orders.containsKey(orderNumber);
     }
 
-    private void createNewOrder(int orderNumber) {
+    private void createOrder(int orderNumber) {
         Order order = new Order(orderNumber);
         orders.put(order.getOrderNumber(), order);
         System.out.println("Order with number " + orderNumber + " was created successfully with status " + order.getStatus());
@@ -48,10 +49,9 @@ public class Controller {
         System.out.println("Which status do you want to set for the order?");
     }
 
-    private void changeOrderStatus(int orderNumber) throws IOException {
+    private void changeOrderStatus(int orderNumber, OrderStatus newStatus) {
         Order order = orders.get(orderNumber);
         try {
-            OrderStatus newStatus = getOrderStatus();
             if (order.getStatus().ordinal() > newStatus.ordinal()) {
                 throw new InvalidStatusException("");
             }
