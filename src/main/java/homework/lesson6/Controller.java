@@ -85,7 +85,7 @@ public class Controller {
                 OrderStatus status = OrderStatus.valueOf(parts[1]);
                 LocalDateTime creationDate = LocalDateTime.parse(parts[2]);
                 LocalDateTime updatedDate;
-                if (parts.length > 3 & parts[3] != null & !parts[3].isEmpty() & !parts[3].equals("null")) {
+                if (!parts[3].equals("null")) {
                     updatedDate = LocalDateTime.parse(parts[3]);
                 } else {
                     updatedDate = null;
