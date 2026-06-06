@@ -16,6 +16,17 @@ public class Order implements Serializable {
         this.createdAt = LocalDateTime.now();
     }
 
+    public Order(int orderNumber, OrderStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.orderNumber = orderNumber;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public OrderStatus getStatus() {
         return status;
     }
@@ -27,6 +38,10 @@ public class Order implements Serializable {
 
     public int getOrderNumber() {
         return orderNumber;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
     @Override

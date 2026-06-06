@@ -1,6 +1,7 @@
 package homework.lesson6;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ public class Controller {
     private final Map<Integer, Order> orders = new HashMap<>();
 
     public void runApp() throws IOException {
-        deserialiseOrders();
+        readOrdersFromFile();
         int orderNumber;
         while ((orderNumber = getNumberFromUser()) != 0) {
             if (!isOrderExist(orderNumber)) {
@@ -21,7 +22,7 @@ public class Controller {
                 changeOrderStatus(orderNumber, status);
             }
         }
-        serializeOrders();
+        writeOrdersToFile();
     }
 
     private int getNumberFromUser() throws IOException {
@@ -75,22 +76,49 @@ public class Controller {
         return getOrderStatus();
     }
 
-    private void serializeOrders() {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Serialized_Orders.txt"))) {
-            outputStream.writeObject(orders);
+    private void readOrdersFromFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/Orders.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(";");
+                int orderNumber = Integer.parseInt(parts[0]);
+                OrderStatus status = OrderStatus.valueOf(parts[1]);
+                LocalDateTime creationDate = LocalDateTime.parse(parts[2]);
+                LocalDateTime updatedDate;
+                if (!parts[3].equals("null")) {
+                    updatedDate = LocalDateTime.parse(parts[3]);
+                } else {
+                    updatedDate = null;
+                }
+                Order order = new Order(orderNumber, status, creationDate, updatedDate);
+                orders.put(orderNumber, order);
+            }
+            if (orders.isEmpty()) {
+                System.out.println("The order list is empty yet");
+            } else {
+                printOrderList();
+            }
         } catch (IOException e) {
-            System.out.println("Error " + e.getMessage());
+            System.out.println("Input error " + e.getMessage());
         }
     }
 
-    private void deserialiseOrders() {
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Serialized_Orders.txt"))) {
-            Map<Integer, Order> map = (Map<Integer, Order>) inputStream.readObject();
-            orders.clear();
-            orders.putAll(map);
-            printOrderList();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error " + e.getMessage());
+    private void writeOrdersToFile() {
+        try (FileWriter writer = new FileWriter("src/Orders.txt")) {
+            String line;
+            for (Order order : orders.values()) {
+                line = "";
+                line += order.getOrderNumber();
+                line += ";";
+                line += order.getStatus();
+                line += ";";
+                line += order.getCreatedAt();
+                line += ";";
+                line += order.getUpdatedAt();
+                writer.write(line + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Output error " + e.getMessage());
         }
     }
 
