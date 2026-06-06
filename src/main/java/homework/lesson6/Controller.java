@@ -1,4 +1,4 @@
-package homework.lesson8;
+package homework.lesson6;
 
 import java.io.*;
 import java.util.HashMap;
@@ -76,16 +76,16 @@ public class Controller {
     }
 
     private void serializeOrders() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Serialized_Orders.txt"))) {
-            oos.writeObject(orders);
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Serialized_Orders.txt"))) {
+            outputStream.writeObject(orders);
         } catch (IOException e) {
             System.out.println("Error " + e.getMessage());
         }
     }
 
     private void deserialiseOrders() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Serialized_Orders.txt"))) {
-            Map<Integer, Order> map = (Map<Integer, Order>) ois.readObject();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Serialized_Orders.txt"))) {
+            Map<Integer, Order> map = (Map<Integer, Order>) inputStream.readObject();
             orders.clear();
             orders.putAll(map);
             printOrderList();

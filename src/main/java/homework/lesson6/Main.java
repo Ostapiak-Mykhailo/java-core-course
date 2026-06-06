@@ -1,4 +1,4 @@
-package homework.lesson8;
+package homework.lesson6;
 
 import java.io.IOException;
 
