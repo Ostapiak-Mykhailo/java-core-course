@@ -1,4 +1,4 @@
-package homework.lesson9;
+package homework.lesson9.homeTask;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -81,7 +81,7 @@ public class Validator {
     }
 
     private boolean validatePhoneNumber(String string) {
-        Pattern pattern = Pattern.compile("^[+]?380\\d{9}$");
+        Pattern pattern = Pattern.compile("^[+]?38(067|068|096|097|098|050|066|075|095|099|063|073|093)\\d{7}$");
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
