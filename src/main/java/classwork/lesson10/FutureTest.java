@@ -29,7 +29,7 @@ public class FutureTest {
 
     public static class CurrentDateTime implements Callable<LocalDateTime> {
         @Override
-        public LocalDateTime call() throws Exception {
+        public LocalDateTime call() {
             LocalDateTime now = LocalDateTime.now();
             System.out.println("Date for " + Thread.currentThread().getName() + ": " + now);
             return now;
