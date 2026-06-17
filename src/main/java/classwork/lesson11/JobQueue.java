@@ -12,9 +12,9 @@ public class JobQueue {
     }
 
     public synchronized Runnable get() throws InterruptedException {
-        while (jobs.size() == 0) {
+        while (jobs.isEmpty()) {
             this.wait();
         }
-        return jobs.get(0);
+        return jobs.getFirst();
     }
 }
