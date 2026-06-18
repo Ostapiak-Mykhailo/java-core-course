@@ -1,4 +1,4 @@
-package homework.lesson9.homeTask;
+package homework.lesson9.hometask;
 
 import java.io.IOException;
 
