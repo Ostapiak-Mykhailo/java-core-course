@@ -1,4 +1,4 @@
-package homework.lesson9.additionalTask;
+package homework.lesson9.additionaltask;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
