@@ -13,11 +13,10 @@ public class JobAdder implements Runnable {
         while (true) {
             jobQueue.put(new Job());
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 }

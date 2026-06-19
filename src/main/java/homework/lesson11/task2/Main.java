@@ -11,6 +11,5 @@ public class Main {
 
         thread2.start();
         thread1.start();
-
     }
 }

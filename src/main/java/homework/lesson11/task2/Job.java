@@ -6,10 +6,5 @@ public class Job implements Runnable {
     @Override
     public void run() {
         System.out.println(LocalDateTime.now());
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

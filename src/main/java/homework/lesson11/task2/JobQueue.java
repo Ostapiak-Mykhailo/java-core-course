@@ -1,10 +1,10 @@
 package homework.lesson11.task2;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class JobQueue {
 
-    ArrayList<Runnable> jobs = new ArrayList<>();
+    private final LinkedList<Runnable> jobs = new LinkedList<>();
 
     public synchronized void put(Runnable job) {
         jobs.add(job);

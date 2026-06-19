@@ -1,21 +1,16 @@
 package homework.lesson11.task1;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        List<Thread> threadList = new ArrayList<>();
-
         for (int i = 0; i < 10; i++) {
-            Thread thread = new Thread(new Counter());
-            threadList.add(thread);
-            thread.start();
-        }
-        for (Thread thread : threadList) {
-            thread.join();
+            ExecutorService executor = Executors.newFixedThreadPool(10);
+            executor.submit(new Counter());
+            executor.close();
         }
         System.out.println(Counter.COUNTER);
     }
