@@ -2,7 +2,7 @@ package homework.lesson11.task2;
 
 public class JobGetter implements Runnable {
 
-    private JobQueue jobQueue;
+    private final JobQueue jobQueue;
 
     public JobGetter(JobQueue jobQueue) {
         this.jobQueue = jobQueue;
