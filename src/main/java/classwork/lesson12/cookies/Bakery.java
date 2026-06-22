@@ -1,8 +1,5 @@
 package classwork.lesson12.cookies;
 
-import classwork.lesson12.annotations.AnnotationTest;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 public class Bakery {
@@ -11,7 +8,7 @@ public class Bakery {
 
         Class cl = Class.forName("classwork.lesson12.cookies.Cookie");
 
-        if (cl.isAnnotationPresent(ControlledObject.class)){
+        if (cl.isAnnotationPresent(ControlledObject.class)) {
             System.out.println("Annotation is present");
 
             ControlledObject annotation = (ControlledObject) cl.getAnnotation(ControlledObject.class);
@@ -22,24 +19,24 @@ public class Bakery {
             boolean isStop = false;
 
             Method[] methods = cl.getMethods();
-            for (Method method: methods){
-                if (method.isAnnotationPresent(StartObject.class)){
+            for (Method method : methods) {
+                if (method.isAnnotationPresent(StartObject.class)) {
                     isStart = true;
                 }
-                if (method.isAnnotationPresent(StartObject.class)){
+                if (method.isAnnotationPresent(StopObject.class)) {
                     isStop = true;
                 }
-                if (isStart && isStop){
+                if (isStart && isStop) {
                     break;
                 }
-                System.out.println("This start can start baking " + isStart);
-                System.out.println("This start can stop baking " + isStop);
+            }
+            System.out.println("This start can start baking: " + isStart);
+            System.out.println("This start can stop baking: " + isStop);
 
-                if (isStart && isStop){
-                    Cookie cookie = new Cookie();
-                    cookie.cook(annotation.name());
-                    cookie.finish(annotation.name());
-                }
+            if (isStart && isStop) {
+                Cookie cookie = new Cookie();
+                cookie.cook(annotation.name());
+                cookie.finish(annotation.name());
             }
 
         } else {
