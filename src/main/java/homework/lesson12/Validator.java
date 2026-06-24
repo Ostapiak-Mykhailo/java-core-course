@@ -8,7 +8,7 @@ public class Validator {
     public void validateFields(Employee employee) throws ClassNotFoundException {
 
         try {
-            Class cl = Class.forName(Employee.class.getName());
+            Class<?> cl = Class.forName("homework.lesson12.Employee");
             Field[] fields = cl.getDeclaredFields();
             for (Field field : fields) {
                 field.setAccessible(true);

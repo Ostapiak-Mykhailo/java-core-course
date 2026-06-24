@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class EmployeeCreator {
 
-    private final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
+    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private final List<Employee> employees = new ArrayList<>();
 
     public Employee createEmployee() throws IOException {
@@ -25,11 +25,14 @@ public class EmployeeCreator {
     }
 
     private String getName() throws IOException {
-        System.out.println("Please enter employee`s name");
+        System.out.println("Please enter employee`s name or enter `0` to omit this step");
         String name;
         boolean validName;
         do {
             name = getInput();
+            if (name.equals("0")){
+                return null;
+            }
             validName = validateName(name);
             if (!validName) {
                 System.out.println("Incorrect name. It must start with capital letter and contain 4 letters at least");
@@ -39,11 +42,14 @@ public class EmployeeCreator {
     }
 
     private String getEmail() throws IOException {
-        System.out.println("Enter employee`s email");
+        System.out.println("Enter employee`s email or enter `0` to omit this step");
         String email;
         boolean validEmail;
         do {
             email = getInput();
+            if (email.equals("0")){
+                return null;
+            }
             validEmail = validateEmail(email);
             if (!validEmail) {
                 System.out.println("Incorrect input. Please try again");
@@ -87,7 +93,7 @@ public class EmployeeCreator {
     }
 
     private String getInput() throws IOException {
-        return READER.readLine();
+        return reader.readLine();
     }
 
     private boolean validateName(String name) {
