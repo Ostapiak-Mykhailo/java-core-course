@@ -6,7 +6,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Validator validator = new Validator();
-        validator.runApp();
+        try {
+            Validator validator = new Validator();
+            UserCreator creator = new UserCreator(validator);
+            creator.runApp();
+        } catch (ValidationException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
