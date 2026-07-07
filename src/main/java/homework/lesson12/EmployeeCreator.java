@@ -3,7 +3,6 @@ package homework.lesson12;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class EmployeeCreator {
 
@@ -30,8 +29,13 @@ public class EmployeeCreator {
         String number = getValidInput("Please enter employee`s number", false);
         validator.validateNumber(number);
 
-        int salary = Integer.parseInt(Objects.requireNonNull(getValidInput("What salary does employee get?", false)));
-        validator.validateSalary(salary);
+        int salary = 0;
+        try {
+            salary = Integer.parseInt(getValidInput("What salary does employee get", false));
+            validator.validateSalary(salary);
+        } catch ( NumberFormatException e ){
+            System.out.println(e.getMessage());
+        }
 
         Employee employee = new Employee(name, email, number, salary);
         employees.add(employee);
