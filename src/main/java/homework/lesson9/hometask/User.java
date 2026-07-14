@@ -2,10 +2,10 @@ package homework.lesson9.hometask;
 
 public class User {
 
-    private final String name;
-    private final String email;
-    private final String number;
-    private final String password;
+    private String name;
+    private String email;
+    private String number;
+    private String password;
 
     public User(String name, String email, String number, String password) {
         this.name = name;

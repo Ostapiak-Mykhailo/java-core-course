@@ -6,8 +6,8 @@ import java.util.List;
 
 public class UserCreator {
 
-    private ConsoleReader reader = new ConsoleReader();
-    private Validator validator;
+    private final ConsoleReader reader = new ConsoleReader();
+    private final Validator validator;
     private final List<User> users = new ArrayList<>();
 
     public UserCreator(Validator validator) {
