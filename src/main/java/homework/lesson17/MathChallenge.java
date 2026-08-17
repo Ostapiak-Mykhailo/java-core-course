@@ -5,7 +5,7 @@ public class MathChallenge {
 
     public static void main(String[] args) {
 
-        String string1 = "2+(3-1)*3"; //8
+        String string1 = "2(3-1)3"; //12
         String string2 = "(2-0)*(6/2)"; // 6
         String string3 = "6*(4/2)+3*1"; //15
         String string4 = "6/3-1"; //1
@@ -16,6 +16,7 @@ public class MathChallenge {
     }
 
     private static int mathChallenge(String str) {
+        str = addMultiplier(str);
         while (str.contains("(")) {
             int openIndex = str.lastIndexOf('(');
             int closeIndex = str.indexOf(')', openIndex);
@@ -73,6 +74,22 @@ public class MathChallenge {
             }
         }
         return index;
+    }
+
+    private static String addMultiplier(String string) {
+        StringBuilder result = new StringBuilder(string);
+        for (int i = 1; i < result.length(); i++) {
+            char ch = result.charAt(i);
+            if (ch == '(' && "/*-+".indexOf(result.charAt(i - 1)) == -1) {
+                result.insert(i, '*');
+                i++;
+            }
+            if (ch == ')' && i + 1 < result.length() && "/*-+".indexOf(result.charAt(i + 1)) == -1) {
+                result.insert(i+1, '*');
+                i++;
+            }
+        }
+        return result.toString();
     }
 
     private static int findStartLeft(String s, int operatorIndex) {
