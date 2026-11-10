@@ -40,11 +40,11 @@ public class Controller {
     }
 
     private HttpRequest buildRequestBoredApi() {
-        return HttpRequest.newBuilder().uri(URI.create(BORED_API)).GET().build();
+        return HttpRequest.newBuilder().uri(URI.create(BORED_API)).timeout(Duration.ofSeconds(10)).GET().build();
     }
 
     private HttpRequest buildRequestJokeApi() {
-        return HttpRequest.newBuilder(URI.create(JOKE_API)).GET().build();
+        return HttpRequest.newBuilder(URI.create(JOKE_API)).timeout(Duration.ofSeconds(10)).GET().build();
     }
 
     private HttpClient buildClient() {
